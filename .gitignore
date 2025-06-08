@@ -1,0 +1,22 @@
+# 仮想環境（venv）
+venv/
+venv-py311/
+
+# Pythonキャッシュ
+__pycache__/
+*.py[cod]
+*.pyo
+
+# .env ファイル（環境変数）
+.env
+
+# VSCodeなどのIDE設定
+.vscode/
+.idea/
+
+# macOS のファイル
+.DS_Store
+
+# ログやDBなど
+*.log
+*.sqlite3

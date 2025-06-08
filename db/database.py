@@ -9,7 +9,7 @@ load_dotenv()
 # 環境変数から取得
 DB_HOST = os.getenv("hostname")
 DB_PORT = os.getenv("port", "3306")
-DB_USER = os.getenv("username")
+DB_USER = os.getenv("DB_user")
 DB_PASS = os.getenv("password")
 DB_NAME = "pos_kj"  # あなたが作成したDB名
 
