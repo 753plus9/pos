@@ -6,22 +6,48 @@ import os
 # .env読み込み
 load_dotenv()
 
-# 環境変数から取得
-DB_HOST = os.getenv("hostname")
-DB_PORT = os.getenv("port", "3306")
-DB_USER = os.getenv("DB_user")
-DB_PASS = os.getenv("password")
-DB_NAME = "pos_kj"  # あなたが作成したDB名
+# # 環境変数から取得
+# DB_HOST = os.getenv("hostname")
+# DB_PORT = os.getenv("port", "3306")
+# DB_USER = os.getenv("DB_user")
+# DB_PASS = os.getenv("password")
+# DB_NAME = "pos_kj"  # あなたが作成したDB名
 
-DATABASE_URL = (
-    f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-)
+# DATABASE_URL = (
+#     f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+# )
 
-# DBエンジン作成
-# ここで明示的に ssl={"ssl": True} を渡す（Azure用）
+# # DBエンジン作成
+# # ここで明示的に ssl={"ssl": True} を渡す（Azure用）
+# engine = create_engine(
+#     DATABASE_URL,
+#     connect_args={"ssl": {"ssl": True}}  # ← これがポイント
+# )
+
+# データベース接続情報
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+
+# SSL証明書のパス
+ssl_cert = str(base_path / 'DigiCertGlobalRootCA.crt.pem')
+
+# MySQLのURL構築
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# エンジンの作成（SSL設定を追加）
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"ssl": {"ssl": True}}  # ← これがポイント
+    connect_args={
+        "ssl": {
+            "ssl_ca": ssl_cert
+        }
+    },
+    echo=True,
+    pool_pre_ping=True,
+    pool_recycle=3600
 )
 
 # セッション作成

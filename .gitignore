@@ -20,3 +20,5 @@ __pycache__/
 # ログやDBなど
 *.log
 *.sqlite3
+
+DigiCertGlobalRootCA.crt.pem
