@@ -24,27 +24,22 @@ load_dotenv()
 #     connect_args={"ssl": {"ssl": True}}  # ← これがポイント
 # )
 
-# データベース接続情報
+# 環境変数からデータベース接続情報を取得
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
+DB_PORT = os.getenv('DB_PORT', '3306')  # ポートはデフォルト3306
 DB_NAME = os.getenv('DB_NAME')
 
 # SSL証明書のパス
-ssl_cert = str(base_path / 'DigiCertGlobalRootCA.crt.pem')
+# ssl_cert = str(base_path / 'DigiCertGlobalRootCA.crt.pem')
 
-# MySQLのURL構築
+# MySQL接続URL
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-# エンジンの作成（SSL設定を追加）
+# SQLAlchemyエンジン作成（SSLオプションは削除）
 engine = create_engine(
     DATABASE_URL,
-    connect_args={
-        "ssl": {
-            "ssl_ca": ssl_cert
-        }
-    },
     echo=True,
     pool_pre_ping=True,
     pool_recycle=3600
