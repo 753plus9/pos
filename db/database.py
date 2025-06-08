@@ -35,7 +35,7 @@ DB_NAME = os.getenv('DB_NAME')
 # ssl_cert = str(base_path / 'DigiCertGlobalRootCA.crt.pem')
 
 # MySQL接続URL
-DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?ssl=true"
 
 # SQLAlchemyエンジン作成（SSLオプションは削除）
 engine = create_engine(
